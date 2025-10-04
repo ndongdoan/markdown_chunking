@@ -31,24 +31,24 @@ Phương án này chia mỗi file tương ứng với 1 bài viết. Mốc bắt
 ```mermaid
 flowchart TD
 A[Đọc toàn bộ nội dung file Markdown] --> B[Chia nội dung thành danh sách dòng]
-B --> C{Dòng bắt đầu bằng '## ' ?}
-C -- Có --> D{Đang ở trong bài khác?}
-D -- Có --> E[Lưu bài hiện tại vào danh sách articles]
-D -- Không --> F[Tạo bài mới và gán article_title]
+B --> C{Dòng có bắt đầu bằng hai dấu thăng}
+C -- Có --> D{Đang ở trong bài trước đó}
+D -- Có --> E[Lưu bài hiện tại vào danh sách]
+D -- Không --> F[Tạo bài mới và đặt tiêu đề]
 E --> F
-F --> G[Thêm dòng hiện tại vào current_article]
-C -- Không --> H{inside_article == True ?}
-H -- Có --> I[Thêm dòng vào current_article]
-I --> J{Dòng chứa credit (end_pattern) ?}
-J -- Có --> K[Lưu bài vào danh sách articles, reset biến]
+F --> G[Thêm dòng hiện tại vào bài mới]
+C -- Không --> H{Đang ở trong bài}
+H -- Có --> I[Thêm dòng hiện tại vào bài]
+I --> J{Dòng có chứa từ khóa credit}
+J -- Có --> K[Lưu bài vào danh sách rồi đặt lại biến]
 J -- Không --> L[Tiếp tục đọc dòng kế tiếp]
 H -- Không --> L
 K --> L
-L --> M{Hết file ?}
+L --> M{Đã hết file}
 M -- Có --> N[Thêm bài cuối cùng nếu còn sót]
 M -- Không --> C
 N --> O[Ghi từng bài ra file Markdown riêng]
-O --> P[Hoàn tất quá trình chunking]
+O --> P[Hoàn tất quá trình tách bài]
 ```
 
 #### Một số điểm cần cải thiện
