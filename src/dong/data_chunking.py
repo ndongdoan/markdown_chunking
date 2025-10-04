@@ -59,7 +59,6 @@ def split_markdown(input_file, output_folder):
             f.writelines(content)
         print(f"Đã xuất: {filename}")
 
-# --- chạy thử ---
 if __name__ == "__main__":
     input_file = "benh-truyen-nhiem.md"
     output_folder = "chunks_output_benh_truyen_nhiem"
