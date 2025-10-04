@@ -30,35 +30,25 @@ Phương án này chia mỗi file tương ứng với 1 bài viết. Mốc bắt
 
 ```mermaid
 flowchart TD
-
-A([Bắt đầu chương trình]) --> B[Đọc file thành list dòng]
-B --> C[Khởi tạo biến: articles, current_article, article_title=None, inside_article=False]
-
-C --> D{Duyệt từng dòng}
-
-D -->|Dòng bắt đầu bằng "## "| E{inside_article == False?}
-E -->|Yes| F[Bắt đầu bài mới<br/>- Nếu có bài cũ thì lưu<br/>- Reset biến<br/>- Lấy title mới<br/>- inside_article=True]
-E -->|No| G[Heading con trong bài hiện tại<br/>→ Append vào current_article]
-
-D -->|Dòng thường| H{inside_article == True?}
-H -->|No| D
-H -->|Yes| I[Append vào current_article]
-
-I --> J{Dòng có chứa 'Bệnh viện NTP'?}
-J -->|Yes| K[Kết thúc bài<br/>- Append vào articles<br/>- Reset biến<br/>- inside_article=False]
-J -->|No| D
-
-K --> D
-
-D --> L[Hết vòng lặp]
-L --> M{Còn current_article?}
-M -->|Yes| N[Append vào articles]
-M -->|No| O[Tiếp tục]
-
-N --> O
-
-O --> P[Loop qua articles<br/>- Slugify title<br/>- Xuất mỗi bài = 1 file]
-P --> Q([Kết thúc])
+A[Đọc toàn bộ nội dung file Markdown] --> B[Chia nội dung thành danh sách dòng]
+B --> C{Dòng bắt đầu bằng '## ' ?}
+C -- Có --> D{Đang ở trong bài khác?}
+D -- Có --> E[Lưu bài hiện tại vào danh sách articles]
+D -- Không --> F[Tạo bài mới và gán article_title]
+E --> F
+F --> G[Thêm dòng hiện tại vào current_article]
+C -- Không --> H{inside_article == True ?}
+H -- Có --> I[Thêm dòng vào current_article]
+I --> J{Dòng chứa credit (end_pattern) ?}
+J -- Có --> K[Lưu bài vào danh sách articles, reset biến]
+J -- Không --> L[Tiếp tục đọc dòng kế tiếp]
+H -- Không --> L
+K --> L
+L --> M{Hết file ?}
+M -- Có --> N[Thêm bài cuối cùng nếu còn sót]
+M -- Không --> C
+N --> O[Ghi từng bài ra file Markdown riêng]
+O --> P[Hoàn tất quá trình chunking]
 ```
 
 #### Một số điểm cần cải thiện
