@@ -50,16 +50,23 @@ def split_markdown(input_file, output_folder):
 
     Path(output_folder).mkdir(parents=True, exist_ok=True)
 
-    for idx, (title, content) in enumerate(articles, start=1):
-        if not title:
-            title = f"untitled-{idx}"
-        filename = f"{idx:02d}-{slugify(title)}.md"
+    for index, (title, content) in range(0, len(articles), 4):
+        filename = f"bai-{index:02d}-{(index + 3):02d}.md"
         filepath = Path(output_folder) / filename
         with open(filepath, "w", encoding="utf-8") as f:
             f.writelines(content)
         print(f"Đã xuất: {filename}")
 
+    # for idx, (title, content) in enumerate(articles, start=1):
+    #     if not title:
+    #         title = f"untitled-{idx}"
+    #     filename = f"{idx:02d}-{slugify(title)}.md"
+    #     filepath = Path(output_folder) / filename
+    #     with open(filepath, "w", encoding="utf-8") as f:
+    #         f.writelines(content)
+    #     print(f"Đã xuất: {filename}")
+
 if __name__ == "__main__":
-    input_file = "benh-truyen-nhiem.md"
-    output_folder = "chunks_output_benh_truyen_nhiem"
+    input_file = "benh-truyen-nhiem.md"     #thay bằng tên file md gốc
+    output_folder = "chunks_output_benh_truyen_nhiem"   #thay bằng tên output folder
     split_markdown(input_file, output_folder)
