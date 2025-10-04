@@ -24,10 +24,6 @@ def split_markdown(input_file, output_folder):
         # Tìm heading "##"
         if line.startswith("## "):
             if not inside_article or article_title is None:
-                if current_article:
-                    articles.append((article_title, current_article))
-                    current_article = []
-
                 # Lấy bài mới
                 article_title = line.strip("# ").strip()
                 inside_article = True
@@ -44,29 +40,25 @@ def split_markdown(input_file, output_folder):
                     article_title = None
                     inside_article = False
 
-    # Bài cuối không có credit?
+    # Thêm bài cuối vào list articles
     if current_article:
         articles.append((article_title, current_article))
 
     Path(output_folder).mkdir(parents=True, exist_ok=True)
 
-    for index, (title, content) in range(0, len(articles), 4):
-        filename = f"bai-{index:02d}-{(index + 3):02d}.md"
+    for idx, (title, content) in enumerate(articles, start=1):
+        if not title:
+            title = f"untitled-{idx}"
+        filename = f"{idx:02d}-{slugify(title)}.md"
         filepath = Path(output_folder) / filename
         with open(filepath, "w", encoding="utf-8") as f:
             f.writelines(content)
         print(f"Đã xuất: {filename}")
 
-    # for idx, (title, content) in enumerate(articles, start=1):
-    #     if not title:
-    #         title = f"untitled-{idx}"
-    #     filename = f"{idx:02d}-{slugify(title)}.md"
-    #     filepath = Path(output_folder) / filename
-    #     with open(filepath, "w", encoding="utf-8") as f:
-    #         f.writelines(content)
-    #     print(f"Đã xuất: {filename}")
-
 if __name__ == "__main__":
-    input_file = "benh-truyen-nhiem.md"     #thay bằng tên file md gốc
-    output_folder = "chunks_output_benh_truyen_nhiem"   #thay bằng tên output folder
+    #thay bằng tên file md gốc
+    input_file = "chu-de-goc.md"
+
+     #thay bằng tên output folder
+    output_folder = "output-folder"  
     split_markdown(input_file, output_folder)
