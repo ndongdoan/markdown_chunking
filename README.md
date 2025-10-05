@@ -30,25 +30,24 @@ Phương án này chia mỗi file tương ứng với 1 bài viết. Mốc bắt
 
 ```mermaid
 flowchart TD
-A[Đọc toàn bộ nội dung file Markdown] --> B[Chia nội dung thành danh sách dòng]
-B --> C{Dòng có bắt đầu bằng hai dấu thăng}
-C -- Có --> D{Đang ở trong bài trước đó}
-D -- Có --> E[Lưu bài hiện tại vào danh sách]
-D -- Không --> F[Tạo bài mới và đặt tiêu đề]
-E --> F
-F --> G[Thêm dòng hiện tại vào bài mới]
-C -- Không --> H{Đang ở trong bài}
-H -- Có --> I[Thêm dòng hiện tại vào bài]
-I --> J{Dòng có chứa từ khóa credit}
-J -- Có --> K[Lưu bài vào danh sách rồi đặt lại biến]
-J -- Không --> L[Tiếp tục đọc dòng kế tiếp]
-H -- Không --> L
+A[Đọc file Markdown] --> B[Chia file thành danh sách dòng]
+B --> C{Dòng bắt đầu bằng '## '?}
+C -- Không --> D[Thêm dòng vào bài hiện tại (nếu đang trong bài)]
+D --> E{Dòng chứa credit?}
+E -- Có --> F[Lưu bài vào danh sách, reset biến]
+E -- Không --> B
+C -- Có --> G{is_new_article?}
+G -- Có --> H[Lưu bài trước (nếu có), tạo bài mới]
+G -- Không --> I[Thêm dòng vào bài hiện tại]
+H --> B
+I --> B
+F --> B
+B -->|Hết file| J{Còn bài đang viết dở?}
+J -- Có --> K[Thêm bài cuối vào danh sách]
+J -- Không --> L[Gom nhóm các bài theo group_size]
 K --> L
-L --> M{Đã hết file}
-M -- Có --> N[Thêm bài cuối cùng nếu còn sót]
-M -- Không --> C
-N --> O[Ghi từng bài ra file Markdown riêng]
-O --> P[Hoàn tất quá trình tách bài]
+L --> M[Ghi nhóm bài ra file .md]
+M --> N[In thông báo hoàn tất]
 ```
 
 #### Một số điểm cần cải thiện
