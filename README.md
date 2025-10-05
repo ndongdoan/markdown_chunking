@@ -30,25 +30,19 @@ Phương án này có mỗi file chứa 4 bài viết (có thể tùy ý điều
 #### Workflow
 
 ```mermaid
-flowchart TD
-A[Đọc file Markdown] --> B[Chia file thành danh sách dòng]
-B --> C{Dòng bắt đầu bằng '## '?}
-C -- Không --> D[Thêm dòng vào bài hiện tại nếu đang trong bài]
-D --> E{Dòng chứa credit?}
-E -- Có --> F[Lưu bài vào danh sách, reset biến]
-E -- Không --> B
-C -- Có --> G{is_new_article?}
-G -- Có --> H[Lưu bài trước nếu có, tạo bài mới]
-G -- Không --> I[Thêm dòng vào bài hiện tại]
-H --> B
-I --> B
-F --> B
-B -->|Hết file| J{Còn bài đang viết dở?}
-J -- Có --> K[Thêm bài cuối vào danh sách]
-J -- Không --> L[Gom nhóm các bài theo group_size]
-K --> L
-L --> M[Ghi nhóm bài ra file .md]
-M --> N[In thông báo hoàn tất]
+flowchart LR
+    A[Đọc file] --> B[Parse từng dòng]
+    B --> C{Heading '##'?}
+    C -- Có --> D{is_new_article?}
+    D -- Có --> E[Lưu bài trước, tạo bài mới]
+    D -- Không --> F[Thêm vào bài hiện tại]
+    C -- Không --> F
+    F --> G{Credit?}
+    G -- Có --> H[Lưu bài và reset]
+    G -- Không --> B
+    H --> B
+    B --> I[Gộp nhóm và ghi file .md]
+    I --> J[Hoàn tất]
 ```
 
 #### Đã khắc phục được
