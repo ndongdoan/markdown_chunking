@@ -32,12 +32,12 @@ Phương án này chia mỗi file tương ứng với 1 bài viết. Mốc bắt
 flowchart TD
 A[Đọc file Markdown] --> B[Chia file thành danh sách dòng]
 B --> C{Dòng bắt đầu bằng '## '?}
-C -- Không --> D[Thêm dòng vào bài hiện tại (nếu đang trong bài)]
+C -- Không --> D[Thêm dòng vào bài hiện tại nếu đang trong bài]
 D --> E{Dòng chứa credit?}
 E -- Có --> F[Lưu bài vào danh sách, reset biến]
 E -- Không --> B
 C -- Có --> G{is_new_article?}
-G -- Có --> H[Lưu bài trước (nếu có), tạo bài mới]
+G -- Có --> H[Lưu bài trước nếu có, tạo bài mới]
 G -- Không --> I[Thêm dòng vào bài hiện tại]
 H --> B
 I --> B
