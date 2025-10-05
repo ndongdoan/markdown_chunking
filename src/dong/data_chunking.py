@@ -84,7 +84,7 @@ def split_markdown(input_path: str, output_folder: str, group_size = GROUP_SIZE)
         joined_article = "".join("".join(content) for _, content in group)
         output_path.write_text(joined_article, encoding="utf-8")
 
-    print(f"✅ Tách hoàn tất: {len(articles)} bài → {group_count} file trong {output_folder}")
+    print(f"✅ Tách hoàn tất: {len(articles)} bài -> {group_count} file trong {output_folder}")
 
 if __name__ == "__main__":
     #thay bằng tên file md gốc
