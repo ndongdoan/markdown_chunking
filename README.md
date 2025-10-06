@@ -41,24 +41,24 @@ pip install unidecode
 
 ```mermaid
 flowchart TD
-A[Đọc file Markdown] --> B[Chia file thành danh sách dòng]
-B --> C{Dòng bắt đầu bằng '## '?}
-C -- Không --> D[Thêm dòng vào bài hiện tại nếu đang trong bài]
-D --> E{Dòng chứa credit?}
-E -- Có --> F[Lưu bài vào danh sách, reset biến]
-E -- Không --> B
-C -- Có --> G{is_new_article?}
-G -- Có --> H[Lưu bài trước nếu có, tạo bài mới]
-G -- Không --> I[Thêm dòng vào bài hiện tại]
-H --> B
-I --> B
-F --> B
-B -->|Hết file| J{Còn bài đang viết dở?}
-J -- Có --> K[Thêm bài cuối vào danh sách]
-J -- Không --> L[Gom nhóm các bài theo group_size]
-K --> L
-L --> M[Ghi nhóm bài ra file .md]
-M --> N[In thông báo hoàn tất]
+    A[Đọc file Markdown] --> B[Chia nội dung thành từng dòng]
+    B --> C{Dòng bắt đầu bằng '## '?}
+    C -- Không --> D[Thêm dòng vào bài hiện tại]
+    D --> E{Có credit?}
+    E -- Có --> F[Lưu bài, reset biến]
+    E -- Không --> B
+    C -- Có --> G{is_new_article?}
+    G -- Có --> H[Lưu bài trước, tạo bài mới]
+    G -- Không --> I[Thêm dòng vào bài hiện tại]
+    H --> B
+    I --> B
+    F --> B
+    B -->|Hết file| J{Còn bài dở?}
+    J -- Có --> K[Thêm bài cuối vào danh sách]
+    J -- Không --> L[Gộp nhóm theo group_size]
+    K --> L
+    L --> M[Ghi nhóm ra file .md]
+    M --> N[Hoàn tất]
 ```
 
 ---
