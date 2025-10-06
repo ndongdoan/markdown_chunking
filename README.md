@@ -94,6 +94,8 @@ Phương án này dùng phương pháp semantic chunking để tách file (tổn
 
 #### Workflow (Mermaid)
 
+<div style="zoom:0.75">
+
 ```mermaid
 flowchart TD
     A[Đọc file Markdown đầu vào] --> B[Tách nội dung theo heading '##']
@@ -110,6 +112,8 @@ flowchart TD
     K -- Có --> A
     K -- Không --> L[Hoàn tất quá trình semantic chunking]
 ```
+
+</div>
 
 #### Tính năng chính
 
