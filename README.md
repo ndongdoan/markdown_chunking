@@ -76,9 +76,9 @@ flowchart TD
 
 ---
 
-### Phương án 2: Semantic Chunking
+### Phương án 2: Mix Chunking
 
-Phương án này dùng phương pháp semantic chunking để tách file (tổng quát hơn phương án 1).
+Phương án này dùng phương pháp tách file từ phương pháp 1 ra những file nhỏ sau đó sử dụng Model ngôn ngữ để gộp cái file có chung ý lại thành file lớn hơn sao cho file này không vượt quá số dung lượng cho phép (tổng quát hơn phương án 1).
 
 #### Mô tả các hàm, biến
 
@@ -118,7 +118,7 @@ flowchart TD
 #### Tính năng chính
 
 - Xử lý **toàn bộ thư mục** `.md` (có thể đệ quy).
-- **Giới hạn kích thước** mỗi file theo bytes: `--max-size` (mặc định **1 KB** để test nhanh).
+- **Giới hạn kích thước** mỗi file theo bytes: `--max-size` (mặc định **1 MB** để test nhanh).
 - **Embedding đa ngôn ngữ**: `paraphrase-multilingual-MiniLM-L12-v2`.
 - **Tiêu đề chủ đề tự động** bằng TF‑IDF.
 - Xuất Markdown **sạch, dễ đọc**.
