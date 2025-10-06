@@ -163,5 +163,5 @@ python -m cluster_markdown.main input/ clustered-output --max-size 1024 --recurs
 ---
 
 #### Một số điểm cần cải thiện
-- Vẫn còn đang giữ vấn đề của phương pháp 1 về việc xử lí file chưa qua xử lí markdown, có thể khắc phục bằng cách thay đổi cách chia nhỏ file thành semantic chunking thay vì traditional chunking như phương pháp 1.
+- Vẫn còn đang giữ vấn đề của phương pháp 1 về việc không thử chạy trên file chưa qua xử lí markdown, có thể khắc phục bằng cách thay đổi cách chia nhỏ file thành semantic chunking thay vì traditional chunking như phương pháp 1.
 - Có thể dùng CUDA hoặc CPU accelartion để tăng tốc độ xử lí.
