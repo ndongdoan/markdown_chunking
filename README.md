@@ -96,24 +96,19 @@ Phương án này dùng phương pháp semantic chunking để tách file (tổn
 
 ```mermaid
 flowchart TD
-    A[Đọc file Markdown] --> B[Chia file thành danh sách dòng]
-    B --> C{Dòng bắt đầu bằng '## '?}
-    C -- Không --> D[Thêm dòng vào bài hiện tại]
-    C -- Có --> E{Đang trong bài?}
-    E -- Có --> F[Lưu bài trước nếu có, tạo bài mới]
-    E -- Không --> G[Bắt đầu bài mới]
-    D --> H{Dòng chứa credit?}
-    H -- Có --> F
-    H -- Không --> B
-    F --> I[Lưu bài vào danh sách, reset biến]
-    B --> J{Hết file?}
-    J -- Có --> K[Thêm bài cuối vào danh sách]
-    K --> L[Gom nhóm bài theo group_size (nếu dùng)]
-    L --> M[Giải thuật phân cụm KMeans với embeddings]
-    M --> N[Tạo tiêu đề bằng TF-IDF]
-    N --> O[Kiểm tra kích thước từng file]
-    O -- >|> max| P[Tăng K và phân cụm lại]
-    O -- ≤ max --> Q[In thông báo hoàn tất & ghi ra file]
+    A[Đọc file Markdown đầu vào] --> B[Tách nội dung theo heading '##']
+    B --> C{Section quá dài?}
+    C -- Có --> D[Chia nhỏ thêm theo '###', đoạn hoặc câu]
+    C -- Không --> E[Giữ nguyên section]
+    D --> F[Tạo embedding bằng SentenceTransformer]
+    E --> F
+    F --> G[Phân cụm KMeans dựa trên độ tương đồng ngữ nghĩa]
+    G --> H[Tìm số cụm K tối thiểu<br/>để kích thước mỗi cụm ≤ giới hạn byte]
+    H --> I[Trích xuất từ khóa TF-IDF<br/>đặt tên cho từng cụm]
+    I --> J[Ghi các cụm ra file Markdown riêng]
+    J --> K{Còn file khác trong thư mục?}
+    K -- Có --> A
+    K -- Không --> L[Hoàn tất quá trình semantic chunking]
 ```
 
 #### Tính năng chính
